@@ -1,0 +1,7 @@
+<h1> Edit Team Item</h1>
+<%= bootstrap_form_with model: @teams, url: team_path(@teams), method: :patch, data: { turbo: false } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :description %>
+  <%= f.text_field :coach %>
+  <%= f.submit %>
+<% end %>

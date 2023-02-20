@@ -1,0 +1,7 @@
+<h1>Create New Team</h1>
+<%= bootstrap_form_with model: @teams, url: teams_path, method: :post, data: { turbo: false } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_area :description %>
+  <%= f.text_area :coach %>
+  <%= f.submit %>
+<% end %>

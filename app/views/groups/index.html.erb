@@ -1,0 +1,165 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class=" d-flex navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" style="margin-right:5px">
+                <%= link_to 'Profile', user_profile_path(@user) %>
+        </li>
+        <li class="nav-item">
+                <%= link_to 'Home', home_path %> 
+        </li>
+        
+        
+      </ul>
+      <form class="d-flex mx-auto" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+        <ul class=" d-flex navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item" style="margin-right:5px">
+                    Notification Icon
+            </li>
+        <li class="nav-item">
+            <%= button_to 'Sign Out', destroy_user_session_path,
+                        method: :delete, data: { turbo: false }%>
+        </li>        
+      </ul>      
+    </div>
+  </div>
+</nav>
+  <div class="row" style="height:100vh">
+    <div class="col-2" style="border-right-style:solid;border-color:black;padding-right:0px;padding-left:12px">
+        <div class="d-flex" style="height:30px">
+            <div style="font-size:12px">
+            <p style="margin-right:10px">
+                Edit
+            </p>
+            </div>
+            <p style="margin-left:5 px">
+                <%= @group.name %>
+            </p>
+        </div>
+        <hr style="margin-bottom:4px">
+        <div >
+            <% if @group.group_image.attached? %>
+                <ul style="margin-left:5px;list-style-type:none">
+                    <%= image_tag @group.group_image, class: 'w-100 shadow-lg d-block mx-auto', style: 'max-width: 32rem;' %>
+                    
+                </ul>
+            <% else %>
+                <ul style="margin-left:5px;list-style-type:none">
+                    <%= image_tag 'group.jpg', class: 'w-100 shadow-lg d-block mx-auto', style: 'max-width: 32rem;' %>
+                </ul>
+            <% end %>
+            <% if current_user.groups.include? @group%>
+                <%= button_to "Leave", remove_member_path(@group,current_user), method: :delete, data: { turbo: false }, class:'btn btn-primary'%>
+            <% else %>
+                <%= button_to "Join", add_member_path(@group,current_user), method: :post, data: { turbo: false }, class:"btn btn-primary" %>
+            <% end %>
+
+        </div>
+        
+        
+    
+        <hr style="margin-bottom:4px">
+        <div>
+            <form action="/action_page.php">
+                <input type="checkbox" >
+                <label > Public</label><br>
+                <input type="checkbox">
+                <label > Private</label><br>
+                
+              </form>
+        </div>
+        <div class="d-flex" style="border-top-style:solid;height:20px"></div>
+            <p style="margin-right:5 px">
+                Settings
+            </p>
+            <hr style="margin-bottom:4px">
+            <% @participations=GroupParticipation.where(group_id: @group[:id],user_id: current_user[:id])%>
+                <% @participations.each do |p|%>
+                    <% if p[:admin]=="true" %>
+                        <%= link_to "Edit group", edit_group_path(@group), class: 'btn btn-primary'%>
+                    <% end %>
+                <% end %>
+        </div>
+    
+    <div class="col" style="padding-left:0px">
+        <div >
+            <h2>
+                Group Description
+            </h2>
+        </div>
+        <hr style="margin-bottom:4px">
+        <div>
+            <div class="col-10">
+                <p>
+                    This group is for hockey lovers
+                </p>
+            </div>
+            
+        </div>
+        <hr style="margin:0px">
+        <div class="d-flex" style="border-top-style:solid;height:20px"></div>
+        <div >
+            <h2>
+                Star Player
+            </h2>
+            
+        </div>
+        <hr style="margin-bottom:4px">
+        <div>
+            <div class="col-10" style="margin:10px" >
+                <%= @group.star_player%>
+            </div>
+        </div>
+        <hr style="margin:0px">
+        <div class="d-flex" style="border-top-style:solid;height:20px"></div>
+        <div >
+            <h2>
+                Media
+            </h2>
+        </div>
+        <hr style="margin-bottom:4px">
+        <div>
+            <div class="col-10">
+                <button class="favorite styled"
+                type="button">
+                photos
+            </button>
+            <button class="favorite styled"
+                type="button">
+                videos
+            </button>
+            
+            </div>
+        </div>
+        <div class="d-flex" style="border-top-style:solid;height:20px"></div>
+        <div >
+            <h2>
+                Group Members
+            </h2>
+        </div>
+        <hr style="margin-bottom:4px">
+        <div>
+            <ul style="list-style-type:none">
+            <% @members= @group.users%>
+            <% @members.each do |m|%>
+                <li>
+                    <%= m.name %>
+                </li>
+            <% end %>
+            </ul>
+            
+        </div>
+        
+
+        
+        
+        
+    </div>
+</div>
+</div>

@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand mb-1" href="#">Field Hockey</a>
+     <div class="d-flex justify-content-between">
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+            <li class="nav-item">
+                <%= link_to 'Home', home_path %> 
+            </li>
+        <% else %>
+            <li class="nav-item">
+            <%= link_to 'Sign in', new_user_session_path %>    
+           </li>
+           <div style="margin-left:15px">
+          <li class="nav-item">
+            <%= link_to 'Sign up', new_user_registration_path %>
+          </li>
+        <% end %>
+          <div>
+      </ul>
+    
+  </div>
+</nav>
+<div style="text-align:center;margin:40px">
+    <h1>
+        Hockey enthusiasts Welcome!
+    </h1>
+    <p>
+        Join groups organize events and do much more.
+    </p>
+    <p>
+        Connect to the world of hockey In and around Memphis with our app.
+    </p>
+    <p>
+        <%= link_to 'Get Started!', new_user_session_path %>
+    </p>
+</div>

@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id          :bigint           not null, primary key
+#  description :string
+#  interests   :string
+#  location    :string
+#  member_type :string
+#  name        :string
+#  star_player :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  name: MyString
+  star_player: MyString
+  type: 
+  description: MyString
+
+two:
+  name: MyString
+  star_player: MyString
+  type: 
+  description: MyString

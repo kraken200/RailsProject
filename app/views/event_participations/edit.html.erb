@@ -1,0 +1,24 @@
+<h1>Edit Team</h1>
+<table class="table table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team|%>
+        <tr>
+        <td><%= team.name%></td>
+        <td class="d-flex">
+            <% if team.events.include? @event%>
+                <%= button_to "Remove", remove_event_member_path(@event,team), method: :delete, data: { turbo: false }, class:'btn btn-primary' %>
+            <% else %>
+                <%= button_to "Add", add_event_member_path(@event,team), method: :post, data: { turbo: false }, class:"btn btn-primary" %>
+            <% end %>
+        </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Cancel", user_profile_path(current_user), class:"btn btn-primary"%>

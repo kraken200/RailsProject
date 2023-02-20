@@ -1,0 +1,11 @@
+<h1>Edit group</h1>
+<%= bootstrap_form_with model: @group, url: groups_path(@group), method: :patch, data: { turbo: false } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_area :star_player %>
+  <%= f.file_field :group_image%>
+  <%= f.select :member_type, ['forward', 'goalie','defender','midfielder'] %>
+  <%= f.text_area :description %>
+  <%= f.select :location, ['Memphis', 'St.Louis','Nashville'] %>
+  <%= f.select :interests, ['professional', 'casual'] %>
+  <%= f.submit %>
+<% end %>

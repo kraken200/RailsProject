@@ -1,0 +1,6 @@
+<h1>Create New event</h1>
+<%= bootstrap_form_with model: @event, url: events_path, method: :post, data: { turbo: false } do |f| %>
+  <%= f.text_field :eventname %>
+  <%= f.text_field :date%>
+  <%= f.submit %>
+<% end %>

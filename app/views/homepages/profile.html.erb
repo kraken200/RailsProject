@@ -1,0 +1,178 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class=" d-flex navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" style="margin-right:5px">
+                <%= link_to 'Profile', user_profile_path(@user) %>
+        </li>
+        <li class="nav-item">
+                 <%= link_to 'Home', home_path %> 
+        </li>
+        
+        
+      </ul>
+      <form class="d-flex mx-auto" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+        <ul class=" d-flex navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item" style="margin-right:5px">
+                    Notification Icon
+            </li>
+        <li class="nav-item">
+            <%= button_to 'Sign Out', destroy_user_session_path,
+                        method: :delete, data: { turbo: false }%>
+        </li>        
+      </ul>      
+    </div>
+  </div>
+</nav>
+<div class="row" style="height:100vh">
+    <div class="col-2" style="border-right-style:solid;border-color:black;padding-right:0px;padding-left:12px">
+        <div class="d-flex" style="height:20px">
+            <div style="font-size:12px">
+            <%if @user==current_user%>
+                <p style="margin-right:10px">
+                    <%= link_to "Edit", edit_user_registration_path %>
+                </p>
+            <% end %>
+            </div>
+        </div>
+        <% if @user.user_image.attached? %>
+                <ul style="margin-left:5px;list-style-type:none">
+                    <%= image_tag @user.user_image, class: 'w-100 shadow-lg d-block mx-auto', style: 'max-width: 32rem;margin-right:5px' %>
+                </ul>
+        <% else %>
+                <ul style="margin-left:5px;list-style-type:none">
+                    <%= image_tag 'player.jpg', class: 'w-100 shadow-lg d-block mx-auto', style: 'max-width: 32rem;margin-right:5px' %>
+                </ul>
+        <% end %>
+        <div class="d-flex" style="border-top-style:solid;height:20px">
+            <p style="margin-left:5 px">
+                <%= @user.name %>
+            </p>
+        </div>
+        <hr style="margin-bottom:4px">
+        <div>
+            <ul style="list-style-type:none">
+                <li>
+                    <%= @user.interests%>
+                </li>
+                <li>
+                    <%= @user.position%>
+                </li> 
+                <li>
+                    <%= @user.location%>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col" style="padding-left:0px">
+        <div class="d-flex" style="border-bottom-style:solid;padding:10px">
+            <%if @user==current_user%>
+                <p style="font-size:12px">
+                    <%= link_to "Edit", edit_user_registration_path %>
+                <p>
+            <% end %>    
+            <h2>
+                Bio
+            </h2>
+        </div>
+        <div style="margin:30px;height:10vh">
+            <%= @user.bio %>
+        </div>
+        <div style="border-bottom-style:solid;border-top-style:solid;padding:10px">
+            <div class="d-flex">
+                <p style="font-size:20px">
+                Groups
+                </p>
+                <%if @user==current_user%>
+                    <%= link_to "Create new group", new_group_path, class: 'btn btn-primary ms-auto'%>
+                <% end %>
+            </div>
+        </div>
+        <div style="margin:10px">
+            <ul style="list-style-type:none">
+            <% @groups.each do |group|%>
+                <% @participations=GroupParticipation.where(group_id: group[:id],user_id: @user[:id])%>
+                <% @participations.each do |p|%>    
+                    <% if p[:admin]=="true" %>
+                        <li>
+                            <div class="d-flex">
+                                <%= link_to group.name, groups_path(group) %>
+                                <%if @user==current_user%>
+                                    <%= link_to "Edit Group players", edit_group_players_path(group), class:"btn btn-primary ms-auto"%>
+                                <% end %>
+                            </div>
+                        </li>
+                    <% end %>
+                <% end %>
+            <% end %>
+            </ul>
+        </div>
+        <div style="border-bottom-style:solid;border-top-style:solid;padding:10px">
+            <div class="d-flex">
+                <p style="font-size:20px">
+                Teams
+                </p>
+                <%if @user==current_user%>
+                    <%= link_to "Create new team", new_team_path, class: 'btn btn-primary ms-auto'%>
+                <% end %>    
+            </div>
+        </div>
+        <div style="margin:10px">
+            <ul style="list-style-type:none">
+            <% if current_user.team.present?%>
+                <% @team=current_user.team%>
+                <% if @team.uid==current_user.id %>
+                    <li>
+                        <div class="d-flex">
+                            <%= link_to @team.name, team_path(@team)%>
+                            <%if @user==current_user%>
+                                <%= link_to "Edit Team", edit_team_players_path(@team), class:"btn btn-primary ms-auto"%>
+                            <% end %>
+                        </div>
+                    </li>
+                <% else %>
+                    <li>
+                        User does not own any team
+                    </li>
+                <% end %>
+            <% else %>
+                <li>
+                        User is not in any team
+                </li>
+            <% end %>
+            </ul>
+        </div>
+        <div style="border-bottom-style:solid;border-top-style:solid;padding:10px">
+            <div class="d-flex">
+                <p style="font-size:20px">
+                Events
+                </p>
+                <%if @user==current_user%>
+                    <%= link_to "Create new event", new_event_path, class: 'btn btn-primary ms-auto'%>
+                <% end %>
+            </div>
+        </div>
+        <div style="margin:10px">
+            <ul style="list-style-type:none">
+                <% @events.each do |event| %>
+                    <li>
+                        <div class="d-flex">
+                           <%= link_to event.eventname, event_path(event)%>
+                            <%if @user==current_user%>
+                                <%= link_to "Edit event teams", edit_event_participations_path(event), class:"btn btn-primary ms-auto"%>
+                            <% end %>
+                        </div>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+        
+    </div>
+</div>
