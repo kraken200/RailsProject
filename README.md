@@ -17,9 +17,3 @@
 - Open in app in browser from localhost:3000
 - feel free to experiment with the app.
 
-## Information to replicate demo video (M2)
-
-- Log in using username- bob@email.com, password- password
-- If you log in with any other user, that will not effect your ability to replicate the demo. The credentials are available in db/seeds.rb
-- In case of user sign up, please fill in all the information since most of it is required to complete sign up.
-- No further information is required to replicate the demo. You can simply follow the video. link - https://youtu.be/1We_7irgV8s
